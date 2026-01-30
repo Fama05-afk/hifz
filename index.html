@@ -3,115 +3,1064 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hifz Master - Mémorisation du Coran</title>
-    
-    <!-- Polices arabes optimisées pour le Coran -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- React et ReactDOM -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- Babel Standalone pour JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
+    <title>Iqra - Mémorisation du Coran</title>
+    <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Scheherazade+New:wght@400;700&display=swap');
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%);
+            min-height: 100vh;
+        }
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo-group {
+            text-align: center;
+        }
+        .logo-arabic {
+            font-family: 'Scheherazade New', serif;
+            font-size: 48px;
+            color: #1E3A8A;
+            margin-bottom: 8px;
+        }
+        .logo-french {
+            font-size: 24px;
+            font-weight: bold;
+            color: #F59E0B;
+        }
+        .stats-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .stat-badge {
+            background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #6B7280;
+            margin-top: 4px;
+        }
         
-        .arabic-text {
-            font-family: 'Amiri Quran', 'Scheherazade New', 'Traditional Arabic', serif;
+        /* Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .dashboard-card {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid #F59E0B;
+        }
+        .dashboard-label {
+            font-size: 14px;
+            color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        .dashboard-value {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+        .dashboard-detail {
+            font-size: 14px;
+            color: #9CA3AF;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .arabic {
+            font-family: 'Scheherazade New', serif;
+            font-size: 72px;
+            line-height: 2;
+            text-align: center;
+            direction: rtl;
+            padding: 40px;
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 3px solid #FBBF24;
+            color: #1F2937;
+        }
+        .translation {
+            text-align: center;
+            font-size: 20px;
+            color: #6B7280;
+            font-style: italic;
+            padding: 20px;
+            background: white;
+            border-radius: 16px;
+            border-left: 4px solid #F59E0B;
+        }
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .verse-info {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border-radius: 12px;
+        }
+        .progress {
+            height: 10px;
+            background: #E5E7EB;
+            border-radius: 999px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #F59E0B 0%, #FBBF24 100%);
+            transition: width 0.5s;
+        }
+        .tajweed-guide {
+            background: #DBEAFE;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
+        }
+        .tajweed-item {
+            display: inline-block;
+            margin: 8px;
+            padding: 8px 16px;
+            background: white;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .color-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .ghunna { 
+            color: #10B981; 
+            font-weight: 700; 
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .ghunna:hover {
+            background: rgba(16, 185, 129, 0.2);
+            transform: scale(1.05);
+        }
+        .idgham { 
+            color: #DC2626; 
+            font-weight: 700; 
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .idgham:hover {
+            background: rgba(220, 38, 38, 0.2);
+            transform: scale(1.05);
+        }
+        .qalqala { 
+            color: #2563EB; 
+            font-weight: 700; 
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .qalqala:hover {
+            background: rgba(37, 99, 235, 0.2);
+            transform: scale(1.05);
+        }
+        .madd { 
+            color: #9333EA; 
+            font-weight: 700; 
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .madd:hover {
+            background: rgba(147, 51, 234, 0.2);
+            transform: scale(1.05);
+        }
+        .ikhfa { 
+            color: #EA580C; 
+            font-weight: 700; 
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .ikhfa:hover {
+            background: rgba(234, 88, 12, 0.2);
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #F59E0B;
+        }
+        .modal-color {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .modal-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1F2937;
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #EF4444;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .close-btn:hover {
+            background: #DC2626;
+            transform: rotate(90deg);
+        }
+        .explanation-section {
+            margin: 20px 0;
+        }
+        .explanation-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 12px;
+        }
+        .explanation-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #4B5563;
+            margin-bottom: 12px;
+        }
+        .example-arabic {
+            font-family: 'Scheherazade New', serif;
+            font-size: 48px;
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border-radius: 16px;
+            margin: 16px 0;
             direction: rtl;
         }
-        
-        /* Animation pour l'enregistrement */
-        @keyframes pulse-wave {
-            0%, 100% { height: 20px; }
-            50% { height: 40px; }
+        .steps {
+            background: #F3F4F6;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 16px 0;
+        }
+        .step {
+            padding: 12px 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        .step:last-child {
+            border-bottom: none;
+        }
+        .step-number {
+            display: inline-block;
+            background: #F59E0B;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: bold;
+            margin-right: 12px;
         }
         
-        .recording-indicator {
-            animation: pulse-wave 0.8s ease-in-out infinite;
+        /* Sélection de sourates */
+        .surah-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .surah-card {
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border: 2px solid #FBBF24;
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .surah-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(251, 191, 36, 0.3);
+            border-color: #F59E0B;
+        }
+        .surah-number {
+            display: inline-block;
+            background: #F59E0B;
+            color: white;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .surah-name-ar {
+            font-family: 'Scheherazade New', serif;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1E3A8A;
+        }
+        .surah-name-fr {
+            font-size: 16px;
+            color: #6B7280;
+            font-weight: 600;
+        }
+        .surah-details {
+            font-size: 14px;
+            color: #9CA3AF;
+            margin-top: 8px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .back-to-list {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div id="root"></div>
-    
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+    <div class="header">
+        <div class="logo-group">
+            <div class="logo-arabic">أقرأ</div>
+            <div class="logo-french">Iqra</div>
+        </div>
+        <div class="stats-group">
+            <div class="stat-item">
+                <div class="stat-value">🔥 <span id="streakCount">0</span></div>
+                <div class="stat-label">Jours consécutifs</div>
+            </div>
+            <div class="stat-badge">
+                <span id="xpCount">0</span> XP
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard de progression -->
+    <div class="dashboard">
+        <div class="dashboard-card">
+            <div class="dashboard-label">Sourates mémorisées</div>
+            <div class="dashboard-value"><span id="suratsMemorized">0</span>/10</div>
+            <div class="dashboard-detail">Continuez comme ça !</div>
+        </div>
+        <div class="dashboard-card">
+            <div class="dashboard-label">Versets appris</div>
+            <div class="dashboard-value" id="versesLearned">0</div>
+            <div class="dashboard-detail">Total de versets</div>
+        </div>
+        <div class="dashboard-card">
+            <div class="dashboard-label">Temps d'étude</div>
+            <div class="dashboard-value"><span id="studyMinutes">0</span>min</div>
+            <div class="dashboard-detail">Cette semaine</div>
+        </div>
+        <div class="dashboard-card">
+            <div class="dashboard-label">Niveau Tajweed</div>
+            <div class="dashboard-value"><span id="tajweedLevel">Débutant</span></div>
+            <div class="dashboard-detail">5 règles maîtrisées</div>
+        </div>
+    </div>
+
+    <!-- Sélection de sourates -->
+    <div id="surahSelection" class="card">
+        <h1 style="text-align: center; margin-bottom: 30px;">Choisissez une sourate</h1>
+        <div class="surah-grid" id="surahGrid"></div>
+    </div>
+
+    <!-- Apprentissage -->
+    <div id="learningView" class="card hidden">
+        <div class="back-to-list">
+            <button class="btn btn-primary" onclick="showSurahSelection()">← Retour à la liste</button>
+        </div>
         
-        // Import des icônes Lucide (version simplifiée)
-        const BookOpen = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-            </svg>
-        );
+        <h1 style="text-align: center; margin-bottom: 30px;" id="currentSurahTitle"></h1>
         
-        const Mic = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                <line x1="12" y1="19" x2="12" y2="23"></line>
-                <line x1="8" y1="23" x2="16" y2="23"></line>
-            </svg>
-        );
+        <div class="verse-info">
+            Verset <span id="verseNum">1</span> sur <span id="totalVerses">5</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar" style="width: 20%"></div>
+        </div>
+
+        <div class="tajweed-guide">
+            <h3 style="margin-bottom: 12px;">💡 Cliquez sur les lettres colorées pour apprendre la règle</h3>
+            <div class="tajweed-item">
+                <span class="color-box" style="background: #10B981;"></span>
+                <span><strong>Ghunna</strong> (nasalisation)</span>
+            </div>
+            <div class="tajweed-item">
+                <span class="color-box" style="background: #DC2626;"></span>
+                <span><strong>Idgham</strong> (assimilation)</span>
+            </div>
+            <div class="tajweed-item">
+                <span class="color-box" style="background: #2563EB;"></span>
+                <span><strong>Qalqala</strong> (écho)</span>
+            </div>
+            <div class="tajweed-item">
+                <span class="color-box" style="background: #9333EA;"></span>
+                <span><strong>Madd</strong> (prolongation)</span>
+            </div>
+            <div class="tajweed-item">
+                <span class="color-box" style="background: #EA580C;"></span>
+                <span><strong>Ikhfa</strong> (dissimulation)</span>
+            </div>
+        </div>
+
+        <div class="arabic" id="arabicText"></div>
         
-        const Calendar = ({ size = 24 }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-            </svg>
-        );
+        <div class="translation" id="translation"></div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="prevVerse()" id="prevBtn" disabled>← Précédent</button>
+            <button class="btn btn-primary" onclick="nextVerse()" id="nextBtn">Suivant →</button>
+        </div>
+    </div>
+
+    <!-- Modal d'explication -->
+    <div class="modal" id="modal">
+        <div class="modal-content" id="modalContent">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Base de données des sourates
+        const SURAHS = {
+            1: {
+                number: 1,
+                name: 'Al-Fatiha',
+                nameAr: 'الفَاتِحَة',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: 'ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِي<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span>', translation: 'Louange à Allah, Seigneur de l\'univers' },
+                    { arabic: 'ٱلرَّحْ<span class="madd" onclick="showExplanation(\'madd\')">مَٰنِ</span> ٱلرَّحِيمِ', translation: 'Le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">مَٰلِكِ</span> يَوْمِ ٱلدِّينِ', translation: 'Maître du Jour de la rétribution' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">إِيَّاكَ</span> نَعْبُدُ وَ<span class="madd" onclick="showExplanation(\'madd\')">إِيَّاكَ</span> نَسْتَعِي<span class="ghunna" onclick="showExplanation(\'ghunna\')">نُ</span>', translation: 'C\'est Toi [seul] que nous adorons, et c\'est Toi [seul] dont nous implorons secours' },
+                    { arabic: 'ٱهْدِ<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَا</span> ٱلصِّ<span class="madd" onclick="showExplanation(\'madd\')">رَٰطَ</span> ٱلْمُسْتَقِيمَ', translation: 'Guide-nous dans le droit chemin' },
+                    { arabic: 'صِ<span class="madd" onclick="showExplanation(\'madd\')">رَٰطَ</span> ٱلَّذِي<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span> <span class="ikhfa" onclick="showExplanation(\'ikhfa\')">أَنْعَمْتَ</span> عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّ<span class="madd" onclick="showExplanation(\'madd\')">آلِّينَ</span>', translation: 'le chemin de ceux que Tu as comblés de faveurs, non pas de ceux qui ont encouru Ta colère, ni des égarés' }
+                ]
+            },
+            109: {
+                number: 109,
+                name: 'Al-Kafirun',
+                nameAr: 'الكَافِرُون',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: '<span class="qalqala" onclick="showExplanation(\'qalqala\')">قُلْ</span> <span class="madd" onclick="showExplanation(\'madd\')">يَٰٓأَيُّهَا</span> ٱلْ<span class="madd" onclick="showExplanation(\'madd\')">كَٰفِرُونَ</span>', translation: 'Dis: Ô vous les infidèles' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">لَآ</span> أَعْبُدُ <span class="madd" onclick="showExplanation(\'madd\')">مَا</span> تَعْبُدُو<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span>', translation: 'Je n\'adore pas ce que vous adorez' },
+                    { arabic: 'وَ<span class="madd" onclick="showExplanation(\'madd\')">لَآ</span> <span class="ikhfa" onclick="showExplanation(\'ikhfa\')">أَنتُمْ</span> عَٰبِدُو<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span> <span class="madd" onclick="showExplanation(\'madd\')">مَآ</span> أَعْبُدُ', translation: 'Et vous n\'êtes pas adorateurs de ce que j\'adore' },
+                    { arabic: 'وَ<span class="madd" onclick="showExplanation(\'madd\')">لَآ أَنَا۠</span> عَابِ<span class="qalqala" onclick="showExplanation(\'qalqala\')">دٌۭ</span> <span class="madd" onclick="showExplanation(\'madd\')">مَّا</span> عَبَدتُّمْ', translation: 'Je ne suis pas adorateur de ce que vous adorez' },
+                    { arabic: 'وَ<span class="madd" onclick="showExplanation(\'madd\')">لَآ</span> <span class="ikhfa" onclick="showExplanation(\'ikhfa\')">أَنتُمْ</span> عَٰبِدُو<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span> <span class="madd" onclick="showExplanation(\'madd\')">مَآ</span> أَعْبُدُ', translation: 'Et vous n\'êtes pas adorateurs de ce que j\'adore' },
+                    { arabic: 'لَكُمْ دِينُكُمْ وَلِىَ دِينِ', translation: 'À vous votre religion, et à moi ma religion' }
+                ]
+            },
+            112: {
+                number: 112,
+                name: 'Al-Ikhlas',
+                nameAr: 'الإِخْلَاص',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: '<span class="qalqala" onclick="showExplanation(\'qalqala\')">قُلْ</span> <span class="madd" onclick="showExplanation(\'madd\')">هُوَ</span> ٱللَّهُ <span class="madd" onclick="showExplanation(\'madd\')">أَحَدٌ</span>', translation: 'Dis: Il est Allah, Unique' },
+                    { arabic: 'ٱللَّهُ ٱلصَّ<span class="madd" onclick="showExplanation(\'madd\')">مَدُ</span>', translation: 'Allah, Le Seul à être imploré pour ce que nous désirons' },
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">لَمْ</span> يَلِ<span class="qalqala" onclick="showExplanation(\'qalqala\')">دْ</span> وَ<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">لَمْ</span> يُولَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">دْ</span>', translation: 'Il n\'a jamais engendré, n\'a pas été engendré non plus' },
+                    { arabic: 'وَ<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">لَمْ</span> يَكُ<span class="ghunna" onclick="showExplanation(\'ghunna\')">ن لَّهُۥ</span> كُفُوًا <span class="madd" onclick="showExplanation(\'madd\')">أَحَدٌۢ</span>', translation: 'Et nul n\'est égal à Lui' }
+                ]
+            },
+            113: {
+                number: 113,
+                name: 'Al-Falaq',
+                nameAr: 'الفَلَق',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: '<span class="qalqala" onclick="showExplanation(\'qalqala\')">قُلْ</span> <span class="madd" onclick="showExplanation(\'madd\')">أَعُوذُ</span> بِرَبِّ ٱلْفَلَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">قِ</span>', translation: 'Dis: Je cherche protection auprès du Seigneur de l\'aube naissante' },
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">مِن</span> شَرِّ <span class="madd" onclick="showExplanation(\'madd\')">مَا</span> خَلَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">قَ</span>', translation: 'contre le mal des êtres qu\'Il a créés' },
+                    { arabic: 'وَ<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">مِن</span> شَرِّ غَاسِ<span class="qalqala" onclick="showExplanation(\'qalqala\')">قٍ</span> <span class="madd" onclick="showExplanation(\'madd\')">إِذَا</span> وَقَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">بَ</span>', translation: 'contre le mal de l\'obscurité quand elle s\'approfondit' },
+                    { arabic: 'وَ<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">مِن</span> شَرِّ ٱلنَّفَّ<span class="madd" onclick="showExplanation(\'madd\')">ٰثَٰتِ</span> فِى ٱلْعُقَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">دِ</span>', translation: 'contre le mal de celles qui soufflent sur les nœuds' },
+                    { arabic: 'وَ<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">مِن</span> شَرِّ حَاسِ<span class="qalqala" onclick="showExplanation(\'qalqala\')">دٍ</span> <span class="madd" onclick="showExplanation(\'madd\')">إِذَا</span> حَسَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">دَ</span>', translation: 'et contre le mal de l\'envieux quand il envie' }
+                ]
+            },
+            114: {
+                number: 114,
+                name: 'An-Nas',
+                nameAr: 'النَّاس',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: '<span class="qalqala" onclick="showExplanation(\'qalqala\')">قُلْ</span> <span class="madd" onclick="showExplanation(\'madd\')">أَعُوذُ</span> بِرَبِّ ٱلنَّاسِ', translation: 'Dis: Je cherche protection auprès du Seigneur des hommes' },
+                    { arabic: 'مَلِكِ ٱلنَّاسِ', translation: 'Le Souverain des hommes' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">إِلَٰهِ</span> ٱلنَّاسِ', translation: 'Dieu des hommes' },
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">مِن</span> شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ', translation: 'contre le mal du mauvais conseiller, furtif' },
+                    { arabic: 'ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ', translation: 'qui souffle le mal dans les poitrines des hommes' },
+                    { arabic: 'مِ<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span> ٱلْجِ<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَّةِ</span> وَٱلنَّاسِ', translation: 'qu\'il soit un djinn, ou un être humain' }
+                ]
+            },
+            110: {
+                number: 110,
+                name: 'An-Nasr',
+                nameAr: 'النَّصر',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">إِذَا</span> جَآءَ نَصْرُ ٱللَّهِ وَٱلْفَتْحُ', translation: 'Lorsque vient le secours d\'Allah ainsi que la victoire' },
+                    { arabic: 'وَرَأَيْتَ ٱلنَّاسَ يَدْخُلُو<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span> فِى دِينِ ٱللَّهِ <span class="madd" onclick="showExplanation(\'madd\')">أَفْوَاجًا</span>', translation: 'et que tu vois les gens entrer en foule dans la religion d\'Allah' },
+                    { arabic: 'فَسَبِّحْ بِحَمْدِ رَبِّكَ وَٱسْتَغْفِرْهُ ۚ <span class="ikhfa" onclick="showExplanation(\'ikhfa\')">إِنَّهُۥ</span> كَا<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span> تَوَّابًا', translation: 'alors, par la louange, célèbre la gloire de ton Seigneur et implore Son pardon. Car c\'est Lui le grand Accueillant au repentir' }
+                ]
+            },
+            111: {
+                number: 111,
+                name: 'Al-Masad',
+                nameAr: 'المَسَد',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: 'تَبَّتْ يَدَآ <span class="madd" onclick="showExplanation(\'madd\')">أَبِى</span> لَهَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">بٍ</span> وَتَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">بَّ</span>', translation: 'Que périssent les deux mains d\'Abû-Lahab et que lui-même périsse' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">مَآ</span> <span class="madd" onclick="showExplanation(\'madd\')">أَغْنَىٰ</span> عَنْهُ مَالُهُۥ وَمَا كَسَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">بَ</span>', translation: 'Sa fortune ne lui sert à rien, ni ce qu\'il a acquis' },
+                    { arabic: 'سَيَصْلَىٰ <span class="madd" onclick="showExplanation(\'madd\')">نَارًا</span> ذَاتَ لَهَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">بٍ</span>', translation: 'Il sera brûlé dans un Feu plein de flammes' },
+                    { arabic: 'وَٱمْرَأَتُهُۥ حَمَّالَةَ ٱلْحَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">طَبِ</span>', translation: 'de même sa femme, la porteuse de bois' },
+                    { arabic: 'فِى جِيدِهَا حَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">بْلٌ</span> <span class="ikhfa" onclick="showExplanation(\'ikhfa\')">مِّن</span> مَّسَ<span class="qalqala" onclick="showExplanation(\'qalqala\')">دٍ</span>', translation: 'à son cou, une corde de fibres' }
+                ]
+            },
+            107: {
+                number: 107,
+                name: 'Al-Maun',
+                nameAr: 'المَاعُون',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">أَرَءَيْتَ</span> ٱلَّذِى يُكَذِّبُ بِٱلدِّينِ', translation: 'Vois-tu celui qui traite de mensonge la Rétribution?' },
+                    { arabic: 'فَذَٰلِكَ ٱلَّذِى يَدُعُّ ٱلْيَتِيمَ', translation: 'C\'est bien lui qui repousse l\'orphelin' },
+                    { arabic: 'وَلَا يَحُضُّ عَلَىٰ <span class="qalqala" onclick="showExplanation(\'qalqala\')">طَعَامِ</span> ٱلْمِسْكِينِ', translation: 'et qui n\'encourage point à nourrir le pauvre' },
+                    { arabic: 'فَوَيْلٌ لِّلْمُصَلِّينَ', translation: 'Malheur donc, à ceux qui prient' },
+                    { arabic: 'ٱلَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُو<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span>', translation: 'tout en négligeant (et retardant) leur Salât' },
+                    { arabic: 'ٱلَّذِينَ هُمْ يُرَآءُو<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span>', translation: 'qui sont pleins d\'ostentation' },
+                    { arabic: 'وَيَمْنَعُو<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span> ٱلْمَاعُو<span class="ghunna" onclick="showExplanation(\'ghunna\')">نَ</span>', translation: 'et refusent l\'ustensile (à celui qui en a besoin)' }
+                ]
+            },
+            108: {
+                number: 108,
+                name: 'Al-Kawthar',
+                nameAr: 'الكَوْثَر',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">إِنَّآ</span> <span class="madd" onclick="showExplanation(\'madd\')">أَعْطَيْنَٰكَ</span> ٱلْكَوْثَرَ', translation: 'Nous t\'avons certes, accordé l\'Abondance' },
+                    { arabic: 'فَصَلِّ لِرَبِّكَ وَٱنْحَرْ', translation: 'Accomplis la Salât pour ton Seigneur et sacrifie' },
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">إِنَّ</span> شَانِئَكَ <span class="madd" onclick="showExplanation(\'madd\')">هُوَ</span> ٱلْأَبْتَرُ', translation: 'Celui qui te hait sera certes, sans postérité' }
+                ]
+            },
+            106: {
+                number: 106,
+                name: 'Quraych',
+                nameAr: 'قُرَيْش',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: 'لِإِيلَٰفِ قُرَيْشٍ', translation: 'À cause du pacte des Coraïch' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">إِۦلَٰفِهِمْ</span> رِحْلَةَ ٱلشِّتَآءِ وَٱلصَّيْفِ', translation: 'De leur pacte [concernant] les voyages d\'hiver et d\'été' },
+                    { arabic: 'فَلْيَعْبُدُوا۟ رَبَّ هَٰذَا ٱلْبَيْتِ', translation: 'Qu\'ils adorent donc le Seigneur de cette Maison (la Kaaba)' },
+                    { arabic: 'ٱلَّذِىٓ <span class="madd" onclick="showExplanation(\'madd\')">أَطْعَمَهُم</span> <span class="ikhfa" onclick="showExplanation(\'ikhfa\')">مِّن</span> جُوعٍ <span class="madd" onclick="showExplanation(\'madd\')">وَءَامَنَهُم</span> <span class="ikhfa" onclick="showExplanation(\'ikhfa\')">مِّنْ</span> خَوْفٍۭ', translation: 'qui les a nourris contre la faim et rassurés de la crainte!' }
+                ]
+            },
+            105: {
+                number: 105,
+                name: 'Al-Fil',
+                nameAr: 'الفِيل',
+                verses: [
+                    { arabic: '<span class="ikhfa" onclick="showExplanation(\'ikhfa\')">بِسْمِ</span> ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ', translation: 'Au nom d\'Allah, le Tout Miséricordieux, le Très Miséricordieux' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">أَلَمْ</span> تَرَ كَيْفَ فَعَلَ رَبُّكَ <span class="madd" onclick="showExplanation(\'madd\')">بِأَصْحَٰبِ</span> ٱلْفِيلِ', translation: 'N\'as-tu pas vu comment ton Seigneur a agi envers les gens de l\'Éléphant?' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">أَلَمْ</span> يَجْعَلْ كَيْدَهُمْ فِى تَضْلِيلٍ', translation: 'N\'a-t-Il pas rendu leur ruse complètement vaine?' },
+                    { arabic: '<span class="madd" onclick="showExplanation(\'madd\')">وَأَرْسَلَ</span> عَلَيْهِمْ <span class="qalqala" onclick="showExplanation(\'qalqala\')">طَيْرًا</span> <span class="madd" onclick="showExplanation(\'madd\')">أَبَابِيلَ</span>', translation: 'et envoyé sur eux des oiseaux par volées' },
+                    { arabic: 'تَرْمِيهِم بِحِجَارَةٍ <span class="ikhfa" onclick="showExplanation(\'ikhfa\')">مِّن</span> سِجِّيلٍ', translation: 'qui leur lançaient des pierres d\'argile?' },
+                    { arabic: 'فَجَعَلَهُمْ كَعَصْفٍ <span class="madd" onclick="showExplanation(\'madd\')">مَّأْكُولٍۭ</span>', translation: 'Et Il les a rendus semblables à une paille mâchée' }
+                ]
+            }
+        };
+
+        const explanations = {
+            ghunna: {
+                title: 'Ghunna (غُنَّة)',
+                color: '#10B981',
+                sections: [
+                    { title: 'Définition', content: 'La Ghunna est un son nasal qui sort du nez. C\'est comme quand vous dites "bon" en français et que le son passe par le nez.' },
+                    { title: 'Durée', content: 'La Ghunna dure exactement 2 temps (harakat).' },
+                    { title: 'Comment prononcer', steps: ['Fermez légèrement votre bouche', 'Faites sortir le son par votre nez', 'Maintenez ce son pendant 2 temps', 'Ne bougez pas votre langue'] },
+                    { title: 'Exemple', example: 'ن لَّهُۥ' }
+                ]
+            },
+            qalqala: {
+                title: 'Qalqala (قَلْقَلَة)',
+                color: '#2563EB',
+                sections: [
+                    { title: 'Définition', content: 'Qalqala signifie "rebond". C\'est un petit "bounce" qu\'on donne à certaines lettres quand elles ont un Sukûn (ْ).' },
+                    { title: 'Comment prononcer', steps: ['Prononcez la lettre normalement', 'À la fin, donnez un petit rebond', 'C\'est comme un petit écho de la lettre', 'N\'ajoutez pas de voyelle, juste un rebond'] },
+                    { title: 'Les 5 lettres', content: 'قُطْبُ جَدّ : ق - ط - ب - ج - د', example: 'قُلْ - دْ' }
+                ]
+            },
+            madd: {
+                title: 'Madd (مَدّ)',
+                color: '#9333EA',
+                sections: [
+                    { title: 'Définition', content: 'Madd signifie "prolonger". On prolonge le son de la voyelle.' },
+                    { title: 'Durée', content: 'Madd naturel = 2 temps\nMadd obligatoire = 4-5 temps\nMadd permis = 2, 4 ou 6 temps' },
+                    { title: 'Comment prononcer', steps: ['Identifiez la lettre de Madd (ا و ي)', 'Étirez le son de la voyelle', 'Maintenez pendant le nombre de temps requis', 'Ne coupez pas le son brusquement'] },
+                    { title: 'Exemples', example: 'هُوَ - أَحَدٌ' }
+                ]
+            },
+            ikhfa: {
+                title: 'Ikhfa (إِخْفَاء)',
+                color: '#EA580C',
+                sections: [
+                    { title: 'Définition', content: 'Ikhfa signifie "cacher". On cache le son du Noun Sâkin (نْ) ou Tanwîn avec une nasalisation.' },
+                    { title: 'Comment prononcer', steps: ['Ne prononcez pas clairement le Noun/Tanwîn', 'Faites une Ghunna (son nasal) de 2 temps', 'Préparez votre bouche pour la lettre suivante', 'Passez directement à la lettre suivante'] },
+                    { title: '15 lettres', content: 'ص ذ ث ك ج ش ق س د ط ز ف ت ض ظ', example: 'بِسْمِ - لَمْ' }
+                ]
+            },
+            idgham: {
+                title: 'Idgham (إِدْغَام)',
+                color: '#DC2626',
+                sections: [
+                    { title: 'Définition', content: 'Idgham signifie "fusionner". On fusionne le Noun Sâkin (نْ) ou le Tanwîn directement avec la lettre suivante.' },
+                    { title: 'Comment prononcer', steps: ['Ne prononcez pas le Noun/Tanwîn séparément', 'Passez directement à la lettre suivante', 'Fusionnez les deux sons en un seul', 'Si c\'est avec Ghunna, ajoutez le son nasal'] },
+                    { title: 'Lettres', content: 'يَرْمَلُون (6 lettres) : ي - ر - م - ل - و - ن' }
+                ]
+            }
+        };
+
+        let currentSurah = null;
+        let currentVerse = 0;
+
+        // Initialisation
+        function init() {
+            renderSurahGrid();
+        }
+
+        // Afficher la grille des sourates
+        function renderSurahGrid() {
+            const grid = document.getElementById('surahGrid');
+            grid.innerHTML = '';
+            
+            Object.values(SURAHS).forEach(surah => {
+                const card = document.createElement('div');
+                card.className = 'surah-card';
+                card.onclick = () => selectSurah(surah.number);
+                card.innerHTML = `
+                    <div class="surah-number">${surah.number}</div>
+                    <div class="surah-name-ar">${surah.nameAr}</div>
+                    <div class="surah-name-fr">${surah.name}</div>
+                    <div class="surah-details">${surah.verses.length} versets</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Sélectionner une sourate
+        function selectSurah(surahNumber) {
+            currentSurah = SURAHS[surahNumber];
+            currentVerse = 0;
+            
+            document.getElementById('surahSelection').classList.add('hidden');
+            document.getElementById('learningView').classList.remove('hidden');
+            
+            document.getElementById('currentSurahTitle').textContent = `${currentSurah.nameAr} - ${currentSurah.name}`;
+            updateVerse();
+        }
+
+        // Retour à la liste
+        function showSurahSelection() {
+            document.getElementById('learningView').classList.add('hidden');
+            document.getElementById('surahSelection').classList.remove('hidden');
+            currentSurah = null;
+            currentVerse = 0;
+        }
+
+        // Mise à jour du verset
+        function updateVerse() {
+            if (!currentSurah) return;
+            
+            document.getElementById('verseNum').textContent = currentVerse + 1;
+            document.getElementById('totalVerses').textContent = currentSurah.verses.length;
+            document.getElementById('arabicText').innerHTML = currentSurah.verses[currentVerse].arabic;
+            document.getElementById('translation').textContent = currentSurah.verses[currentVerse].translation;
+            
+            const progress = ((currentVerse + 1) / currentSurah.verses.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            document.getElementById('prevBtn').disabled = currentVerse === 0;
+            document.getElementById('nextBtn').disabled = currentVerse === currentSurah.verses.length - 1;
+        }
+
+        function nextVerse() {
+            if (currentVerse < currentSurah.verses.length - 1) {
+                currentVerse++;
+                updateVerse();
+            }
+        }
+
+        function prevVerse() {
+            if (currentVerse > 0) {
+                currentVerse--;
+                updateVerse();
+            }
+        }
+
+        function showExplanation(rule) {
+            const exp = explanations[rule];
+            if (!exp) return;
+
+            let html = `
+                <div class="modal-header">
+                    <div class="modal-color" style="background: ${exp.color};"></div>
+                    <div class="modal-title">${exp.title}</div>
+                </div>
+            `;
+
+            exp.sections.forEach(section => {
+                html += `<div class="explanation-section">`;
+                html += `<div class="explanation-title">${section.title}</div>`;
+                
+                if (section.content) {
+                    html += `<div class="explanation-text">${section.content.replace(/\n/g, '<br>')}</div>`;
+                }
+                
+                if (section.steps) {
+                    html += `<div class="steps">`;
+                    section.steps.forEach((step, i) => {
+                        html += `<div class="step"><span class="step-number">${i + 1}</span>${step}</div>`;
+                    });
+                    html += `</div>`;
+                }
+                
+                if (section.example) {
+                    html += `<div class="example-arabic">${section.example}</div>`;
+                }
+                
+                html += `</div>`;
+            });
+
+            document.getElementById('modalBody').innerHTML = html;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // ==========================================
+        // SYSTÈME DE GAMIFICATION
+        // ==========================================
         
-        const Award = ({ size = 24 }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="8" r="7"></circle>
-                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-            </svg>
-        );
-        
-        const Clock = ({ size = 24 }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-        );
-        
-        const BarChart3 = ({ size = 24 }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 3v18h18"></path>
-                <path d="M18 17V9"></path>
-                <path d="M13 17V5"></path>
-                <path d="M8 17v-3"></path>
-            </svg>
-        );
-        
-        const CheckCircle = ({ size = 24 }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-        );
-        
-        const Pause = ({ size = 24 }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="6" y="4" width="4" height="16"></rect>
-                <rect x="14" y="4" width="4" height="16"></rect>
-            </svg>
-        );
-        
-        // Copier ici tout le code JavaScript de hifz-master.jsx
-        // À partir de la ligne "const SURAHS = [" jusqu'à "export default HifzMaster;"
+        let gameData = {
+            xp: 0,
+            streak: 0,
+            suratsMemorized: 0,
+            versesLearned: 0,
+            studyMinutes: 0,
+            lastVisit: null,
+            completedSurahs: []
+        };
+
+        // Charger les données sauvegardées
+        function loadGameData() {
+            const saved = localStorage.getItem('iqraGameData');
+            if (saved) {
+                gameData = JSON.parse(saved);
+                updateStreak();
+            }
+            updateDashboard();
+        }
+
+        // Sauvegarder les données
+        function saveGameData() {
+            localStorage.setItem('iqraGameData', JSON.stringify(gameData));
+            updateDashboard();
+        }
+
+        // Mettre à jour le streak
+        function updateStreak() {
+            const today = new Date().toDateString();
+            const lastVisit = gameData.lastVisit;
+            
+            if (lastVisit === today) {
+                // Déjà visité aujourd'hui
+                return;
+            }
+            
+            if (lastVisit) {
+                const lastDate = new Date(lastVisit);
+                const todayDate = new Date(today);
+                const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+                
+                if (diffDays === 1) {
+                    // Jour consécutif !
+                    gameData.streak++;
+                    gameData.xp += 10; // Bonus streak
+                } else if (diffDays > 1) {
+                    // Streak cassé
+                    gameData.streak = 1;
+                }
+            } else {
+                // Première visite
+                gameData.streak = 1;
+            }
+            
+            gameData.lastVisit = today;
+            gameData.studyMinutes += 5; // +5min par session
+            saveGameData();
+        }
+
+        // Mettre à jour le dashboard
+        function updateDashboard() {
+            document.getElementById('xpCount').textContent = gameData.xp;
+            document.getElementById('streakCount').textContent = gameData.streak;
+            document.getElementById('suratsMemorized').textContent = gameData.suratsMemorized;
+            document.getElementById('versesLearned').textContent = gameData.versesLearned;
+            document.getElementById('studyMinutes').textContent = gameData.studyMinutes;
+            
+            // Niveau Tajweed basé sur XP
+            let level = 'Débutant';
+            if (gameData.xp >= 500) level = 'Expert';
+            else if (gameData.xp >= 200) level = 'Avancé';
+            else if (gameData.xp >= 50) level = 'Intermédiaire';
+            document.getElementById('tajweedLevel').textContent = level;
+        }
+
+        // Marquer un verset comme appris
+        function markVerseCompleted() {
+            if (currentSurah && currentVerse !== null) {
+                gameData.versesLearned++;
+                gameData.xp += 5; // +5 XP par verset
+                saveGameData();
+                showXPGain(5);
+            }
+        }
+
+        // Marquer une sourate comme mémorisée
+        function markSurahCompleted() {
+            if (currentSurah && !gameData.completedSurahs.includes(currentSurah.number)) {
+                gameData.completedSurahs.push(currentSurah.number);
+                gameData.suratsMemorized++;
+                gameData.xp += 50; // +50 XP par sourate
+                saveGameData();
+                showXPGain(50);
+                showBadge('🎉', 'Sourate Mémorisée !', currentSurah.nameAr);
+            }
+        }
+
+        // Afficher gain XP
+        function showXPGain(amount) {
+            const badge = document.createElement('div');
+            badge.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 30px;
+                background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%);
+                color: white;
+                padding: 16px 24px;
+                border-radius: 50px;
+                font-weight: bold;
+                font-size: 18px;
+                box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+                animation: slideInRight 0.5s ease, fadeOut 0.5s ease 2s forwards;
+                z-index: 9999;
+            `;
+            badge.textContent = `+${amount} XP`;
+            document.body.appendChild(badge);
+            
+            setTimeout(() => badge.remove(), 2500);
+        }
+
+        // Afficher un badge
+        function showBadge(icon, title, desc) {
+            const badge = document.createElement('div');
+            badge.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                background: white;
+                border: 3px solid #F59E0B;
+                border-radius: 24px;
+                padding: 40px;
+                text-align: center;
+                z-index: 10000;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                animation: badgePop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            `;
+            badge.innerHTML = `
+                <div style="font-size: 64px; margin-bottom: 16px;">${icon}</div>
+                <div style="font-size: 28px; font-weight: bold; color: #1E3A8A; margin-bottom: 8px;">${title}</div>
+                <div style="font-size: 18px; color: #6B7280;">${desc}</div>
+            `;
+            document.body.appendChild(badge);
+            
+            setTimeout(() => badge.remove(), 3000);
+        }
+
+        // Override nextVerse pour ajouter XP
+        const originalNextVerse = nextVerse;
+        nextVerse = function() {
+            originalNextVerse();
+            markVerseCompleted();
+            
+            // Si dernier verset, proposer de marquer la sourate comme terminée
+            if (currentSurah && currentVerse === currentSurah.verses.length - 1) {
+                setTimeout(() => {
+                    if (confirm('Félicitations ! Voulez-vous marquer cette sourate comme mémorisée ?')) {
+                        markSurahCompleted();
+                    }
+                }, 1000);
+            }
+        };
+
+        // Ajouter les animations CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes fadeOut {
+                to {
+                    opacity: 0;
+                    transform: translateX(400px);
+                }
+            }
+            @keyframes badgePop {
+                to {
+                    transform: translate(-50%, -50%) scale(1);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Charger les données au démarrage
+        loadGameData();
+
+        init();
     </script>
-    
-    <script type="text/babel" src="hifz-master.jsx"></script>
 </body>
 </html>
